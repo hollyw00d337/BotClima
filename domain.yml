@@ -1,33 +1,25 @@
 version: "3.1"
 
 intents:
-  - greet
-  - goodbye
-  - affirm
-  - deny
-  - mood_great
-  - mood_unhappy
-  - bot_challenge
+  - analizar_noticia
+  - resumen_tematico
+  - subir_nota
 
 responses:
-  utter_greet:
-  - text: "Hey! How are you?"
+  utter_saludar:
+  - text: "¡Hola! Soy OSIBot, el asistente de inteligencia pública. ¿Sobre qué quieres saber más hoy?"
 
-  utter_cheer_up:
-  - text: "Here is something to cheer you up:"
-    image: "https://i.imgur.com/nGF1K8f.jpg"
-
-  utter_did_that_help:
-  - text: "Did that help you?"
-
-  utter_happy:
-  - text: "Great, carry on!"
-
-  utter_goodbye:
-  - text: "Bye"
-
-  utter_iamabot:
-  - text: "I am a bot, powered by Rasa."
+  utter_despedirse:
+  - text: "Hasta luego, vuelve pronto!"
+  utter_menu:
+  - text: |
+      1. 📰 Ver las noticias más importantes del día
+      2. 🌎 Explorar por zona geográfica 
+      3. 📈 Ver focos rojos detectados de esta semana 
+      4. 🔎 Buscar informacion sobre una persona, tema o lugar 
+      5. 🧠 Saber qué se dice en medios sobre un tema 
+      6. 📦 Entender qué es este sistema y como funciona 
+      7. 💭 Hablar con un analista humano"
 
 session_config:
   session_expiration_time: 60
