@@ -7,6 +7,7 @@ rules:
   - intent: saludar
   - action: utter_saludar
   - action: utter_menu
+  
 - rule: Despedirse
   steps: 
   - intent: despedirse
