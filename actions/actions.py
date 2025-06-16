@@ -84,3 +84,27 @@ class ActionResponderSinSentido(Action):
         respuesta = response.choices[0].text.strip()
         dispatcher.utter_message(text=respuesta)
         return []
+
+class ActionExplicarSistema(Action):
+    def name(self):
+        return "action_explicar_sistema"
+
+    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: dict):
+        mensaje = (
+            "Este sistema recopila información de diversos medios, organiza las noticias según su relevancia y nivel, "
+            "y utiliza inteligencia artificial para generar resúmenes, análisis y respuestas personalizadas. "
+            "¿En qué más te puedo ayudar?"
+        )
+        dispatcher.utter_message(text=mensaje)
+        return []
+
+class ActionContactarHumano(Action):
+    def name(self):
+        return "action_contactar_humano"
+
+    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: dict):
+        mensaje = (
+            "Para hablar con un analista humano, puedes escribir a contacto@ejemplo.com o usar el chat en vivo disponible en nuestro sitio web."
+        )
+        dispatcher.utter_message(text=mensaje)
+        return []
