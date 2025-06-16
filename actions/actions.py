@@ -108,3 +108,12 @@ class ActionContactarHumano(Action):
         )
         dispatcher.utter_message(text=mensaje)
         return []
+class ActionSaludarMostrarMenu(Action):
+    def name(self):
+        return "action_saludar_mostrar_menu"
+
+    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: dict):
+        saludo = "¡Hola! Soy tu asistente virtual. ¿En qué puedo ayudarte hoy?"
+        menu = "Opciones disponibles:\n1. Consultar noticias\n2. Generar resumen\n3. Explicar el sistema\n4. Hablar con un humano"
+        dispatcher.utter_message(text=f"{saludo}\n\n{menu}")
+        return []

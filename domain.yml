@@ -1,9 +1,18 @@
 version: "3.1"
 
 intents:
+  - saludar
+  - despedirse
   - consultar_noticias
   - generar_resumen
   - responder_sin_sentido
+  - explorar_por_zona_geografica
+  - entender_sistema
+  - consultar_base_datos
+  - saber_medios_sobre_tema
+  - buscar_informacion
+  - hablar_con_analista
+  - ver_focos_rojos
 
 actions:
   - action_consultar_noticias
