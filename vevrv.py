@@ -8,6 +8,7 @@ import csv
 from selenium.webdriver.chrome.options import Options
 import psycopg2
 import pandas as pd
+from pymongo import MongoClient, errors
 
 options = Options()
 options.add_argument("--headless")
@@ -58,10 +59,10 @@ def scraper_alerta_chiapas(soup):
             })
     return resultados
 # Scrapers vacíos con estructura preparada
-def scraper_lajornada(driver, url):
-    driver.get(url)
-    time.sleep(3)
-    soup = BeautifulSoup(driver.page_source, 'html.parser')
+def scraper_lajornada(soup):
+    #driver.get(url)
+    #time.sleep(3)
+    #soup = BeautifulSoup(driver.page_source, 'html.parser')
     resultados = []
 
     # === A PERSONALIZAR: Lo Último ===
@@ -250,27 +251,70 @@ def procesar_nivel(nombre_archivo, nivel_nombre, salida_csv):
     df = pd.DataFrame(todos_los_datos)
     df.to_csv(salida_csv, index=False)
     print(f"✅ Datos guardados en {salida_csv}\n")
-""""
-def extraer_noticia_generico(driver, url, sitio, nivel):
-    driver.get(url)
-    time.sleep(2)
-    soup = BeautifulSoup(driver.page_source, 'html.parser')
+"""
+def extraer_noticia_diariodechiapas(driver, url, sitio, nivel):
+    from bs4 import BeautifulSoup
+    import time
 
-    # Placeholder generales (ajustables por sitio)
-    autor = soup.find("span", class_="autor") or soup.find("p", class_="author")
-    fecha = soup.find("time") or soup.find("span", class_="fecha")
-    titulo = soup.find("h1")
-    cuerpo = soup.find("div", class_="article-body") or soup.find("div", class_="entry-content")
+    driver.get(url)
+    time.sleep(2)  # Esperar a que cargue completamente
+
+    soup = BeautifulSoup(driver.page_source, "html.parser")
+
+    # Título
+    titulo_tag = soup.find("h1", class_="entry-title")
+    titulo = titulo_tag.get_text(strip=True) if titulo_tag else "No disponible"
+
+    # Fecha
+    fecha_tag = soup.find("time", class_="entry-date")
+    fecha = fecha_tag.get_text(strip=True) if fecha_tag else "No disponible"
+
+    # Autor (no visible en muchas noticias de este sitio)
+    autor = "No disponible"
+
+    # Cuerpo de la noticia
+    cuerpo_tag = soup.find("div", class_="td-post-content")
+    cuerpo = cuerpo_tag.get_text(separator="\n", strip=True) if cuerpo_tag else "No disponible"
 
     return {
-        "autor": autor.get_text(strip=True) if autor else "No disponible",
-        "fecha": fecha.get_text(strip=True) if fecha else "No disponible",
-        "titulo": titulo.get_text(strip=True) if titulo else "No disponible",
-        "sitio": sitio,
-        "cuerpo": cuerpo.get_text(strip=True) if cuerpo else "No disponible",
+        "autor": autor,
+        "fecha": fecha,
+        "titulo": titulo,
+        "sitio": "diariodechiapas.com",
+        "cuerpo": cuerpo,
         "nivel": nivel
-    }"""
-def extraer_noticia_diariodechiapas(driver, url, nivel):
+    }
+"""
+def extraer_noticia_cuartopoder(driver, url, sitio, nivel):
+    from bs4 import BeautifulSoup
+    import time
+
+    driver.get(url)
+    time.sleep(2)
+
+    soup = BeautifulSoup(driver.page_source, "html.parser")
+
+    titulo_tag = soup.find("h1", class_="entry-title")
+    titulo = titulo_tag.get_text(strip=True) if titulo_tag else "No disponible"
+
+    fecha_tag = soup.find("time", class_="entry-date")
+    fecha = fecha_tag.get_text(strip=True) if fecha_tag else "No disponible"
+
+    autor = "No disponible"
+
+    cuerpo_tag = soup.find("div", class_="td-post-content")
+    cuerpo = cuerpo_tag.get_text(separator="\n", strip=True) if cuerpo_tag else "No disponible"
+
+    return {
+        "autor": autor,
+        "fecha": fecha,
+        "titulo": titulo,
+        "sitio": sitio,
+        "cuerpo": cuerpo,
+        "nivel": nivel
+    }
+
+def extraer_noticia_(driver, titulo, url, sitio, nivel):
     from bs4 import BeautifulSoup
     import time
 
@@ -303,6 +347,54 @@ def extraer_noticia_diariodechiapas(driver, url, nivel):
         "nivel": nivel
     }
 
+def guardar_noticias_completas(nombre_archivo, lista_noticias):
+    if not lista_noticias:
+        print(f"⚠️ No hay noticias completas para guardar en {nombre_archivo}")
+        return
+
+    # Guardar en CSV
+    with open(nombre_archivo, "w", newline="", encoding="utf-8") as f:
+        campos = ["autor", "fecha", "titulo", "sitio", "cuerpo", "nivel", "clasificacion"]
+        writer = csv.DictWriter(f, fieldnames=campos)
+        writer.writeheader()
+        writer.writerows(lista_noticias)
+    print(f"✅ Noticias completas guardadas en {nombre_archivo}")
+
+    # Guardar en MongoDB
+    db = conectar_mongodb()
+    if db:
+        coleccion = db[f"nivel{lista_noticias[0]['nivel'][-1]}"]  # Ej: nivel1, nivel2, nivel3
+        # Crear índice único en 'sitio'
+        try:
+            coleccion.create_index("sitio", unique=True)
+        except Exception:
+            pass
+
+        for noticia in lista_noticias:
+            try:
+                coleccion.update_one(
+                    {"sitio": noticia["sitio"]},
+                    {"$set": noticia},
+                    upsert=True
+                )
+            except Exception as e:
+                print(f"⚠️ Error al insertar en MongoDB: {e}")
+        print(f"✅ Noticias completas guardadas en MongoDB (nivel {noticia['nivel']})")
+def procesar_noticias_completas(desde_csv, hacia_csv, driver, nivel, clasificacion):
+    noticias_completas = []
+    with open(desde_csv, newline="", encoding="utf-8") as f:
+        reader = csv.DictReader(f)
+        for fila in reader:
+            try:
+                url = fila["url"]
+                sitio = fila["sitio"]
+                noticia = extraer_noticia_cuartopoder(driver, url, sitio, nivel)
+                noticia["clasificacion"] = clasificacion
+                noticias_completas.append(noticia)
+            except Exception as e:
+                print(f"⚠️ Error al extraer nota completa de {fila['url']}: {e}")
+    guardar_noticias_completas(hacia_csv, noticias_completas)
+
 def insertar_en_postgre(datos, nivel):
     tabla = f"nivel{nivel}"
 
@@ -332,27 +424,12 @@ def insertar_en_postgre(datos, nivel):
     cur.close()
     conn.close()
 
-# ---------- Función para procesar nivel ----------
-def procesar_nivel(archivo_txt, nombre_nivel, archivo_salida_csv):
-    # Esta función debe incluir el código para obtener las noticias de cada archivo .txt,
-    # ya lo debes tener configurado con tus scrapers de nivel1, nivel2, nivel3
-    # Aquí asumimos que se genera un DataFrame `df_resultados` con las columnas requeridas:
-    # ['ranking', 'titulo', 'url', 'tipo', 'sitio', 'nivel']
-
-    # Simulación (placeholder), reemplaza esto por el scraping real
-    df_resultados = pd.DataFrame([
-        {'ranking': 1, 'titulo': 'Ejemplo 1', 'url': 'http://ejemplo1.com', 'tipo': 'destacado', 'sitio': 'ejemplo.com', 'nivel': nombre_nivel},
-        {'ranking': 2, 'titulo': 'Ejemplo 2', 'url': 'http://ejemplo2.com', 'tipo': 'reciente', 'sitio': 'ejemplo.com', 'nivel': nombre_nivel}
-    ])
-    
-    df_resultados.to_csv(archivo_salida_csv, index=False)
-# ---------- Registro de scrapers por dominio ----------
 scrapers = {
     "www.cuartopoder.mx": scraper_cuarto_poder,
     "diariodechiapas.com": scraper_diario_chiapas,
     "alertachiapas.com": scraper_alerta_chiapas,
     #'cuartopoder.mx': extraer_noticia_cuartopoder,
-    'diariodechiapas.com': extraer_noticia_diariodechiapas
+    'diariodechiapas.com': extraer_noticia_cuartopoder
     #'alertachiapas.com': extraer_noticia_alertachiapas,
     #'www.jornada.com.mx': extraer_noticia_lajornada,
     #'www.eluniversal.com.mx': extraer_noticia_eluniversal,
@@ -397,22 +474,15 @@ def insertar_en_postgre(datos, nivel):
     conn.commit()
     cur.close()
     conn.close()
-
-# ---------- Función para procesar nivel ----------
-def procesar_nivel(archivo_txt, nombre_nivel, archivo_salida_csv):
-    # Esta función debe incluir el código para obtener las noticias de cada archivo .txt,
-    # ya lo debes tener configurado con tus scrapers de nivel1, nivel2, nivel3
-    # Aquí asumimos que se genera un DataFrame `df_resultados` con las columnas requeridas:
-    # ['ranking', 'titulo', 'url', 'tipo', 'sitio', 'nivel']
-
-    # Simulación (placeholder), reemplaza esto por el scraping real
-    df_resultados = pd.DataFrame([
-        {'ranking': 1, 'titulo': 'Ejemplo 1', 'url': 'http://ejemplo1.com', 'tipo': 'destacado', 'sitio': 'ejemplo.com', 'nivel': nombre_nivel},
-        {'ranking': 2, 'titulo': 'Ejemplo 2', 'url': 'http://ejemplo2.com', 'tipo': 'reciente', 'sitio': 'ejemplo.com', 'nivel': nombre_nivel}
-    ])
+def conectar_mongodb():
+    try:
+        cliente = MongoClient("mongodb://localhost:27017/")
+        db = cliente["noticias_db"]
+        return db
+    except errors.ConnectionFailure as e:
+        print(f"❌ Error al conectar a MongoDB: {e}")
+        return None
     
-    df_resultados.to_csv(archivo_salida_csv, index=False)
-
 # ---------- Ejecutar ----------
 if __name__ == "__main__":
     procesar_nivel("nivel1.txt", "Nivel 1", "nivel1_resultados.csv")
@@ -421,8 +491,15 @@ if __name__ == "__main__":
     procesar_nivel("nivel3.txt", "Nivel 3", "nivel3_resultados.csv")
     #procesar_nivel("nivel2.txt", "nivel2_resultados.csv", scrapers_nivel2, "Nivel 2")
     #procesar_nivel("nivel3.txt", "nivel3_resultados.csv", scrapers_nivel3, "Nivel 3")
-    driver = webdriver.Chrome(options=options)  # Reusar driver en modo headless
+    driver = webdriver.Chrome(options=options)
 
+    procesar_noticias_completas("nivel1_resultados.csv", "full_news_nivel1.csv", driver, "Nivel 1", "más relevante")
+    procesar_noticias_completas("nivel2_resultados.csv", "full_news_nivel2.csv", driver, "Nivel 2", "más reciente")
+    procesar_noticias_completas("nivel3_resultados.csv", "full_news_nivel3.csv", driver, "Nivel 3", "más reciente")
+
+    #driver.quit()
+
+    driver.quit()
     # Leer los CSVs
     datos_nivel1 = pd.read_csv("nivel1_resultados.csv")
     datos_nivel2 = pd.read_csv("nivel2_resultados.csv")
