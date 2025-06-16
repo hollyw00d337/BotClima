@@ -1,36 +1,27 @@
 version: "3.1"
-
 nlu:
-- intent: saludar
-  examples: |
-    - hola
-    - buenas tardes
-    - buenos dias
-    - que tal
-    - como estas
-    - saludos
-    - hola, como estas
-- intent: despedirse
-  examples: |
-    - adios
-    - hasta luego
-    - nos vemos
-    - chao
-    - hasta pronto
-    - que tengas un buen dia
-- intent: analizar_noticia
-  examples: |
-    - analiza esta nota
-    - dime que dice esta noticia
-    - que opinas de este articulo
-    - saca resumen de esto
-    - aqui te mando algo, revisalo
-- intent: resumen_tematico
-  examples: |
-    - que se dice sobre [migracion] en [tapachula]
-    - dime lo mas importante sobre [la refineria]
-    - investiga [bloqueos en chiapas]
-- intent: subir_nota
-  examples: |
-    - te mando esta imagen de un periodico
-    - aqui hay un archivo con varias notas
+  - intent: consultar_base_datos
+    examples: |
+      - Quiero ver las noticias más relevantes
+      - Dame las noticias del nivel 1
+      - ¿Qué hay en el nivel 3?
+
+  - intent: consultar_openai
+    examples: |
+      - Dame un resumen sobre [violencia](tema)
+      - Quiero información sobre [migración](tema)
+      - ¿Qué sabes sobre [derechos humanos](tema)?
+  - intent: Saludar
+    examples: |
+      - Hola
+      - Buenas tardes
+      - ¿Cómo estás?
+      - Saludos
+      - Buen día
+  - intent: Despedirse
+    examples: |
+      - Adiós
+      - Hasta luego
+      - Nos vemos
+      - Chao
+      - Hasta pronto
