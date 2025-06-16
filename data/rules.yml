@@ -1,14 +1,15 @@
 version: "3.1"
 
 rules:
+  - rule: Saludar y mostrar menu
+    steps: 
+      - intent: Saludar
+      - action: utter_saludar
+      - action: utter_menu
+  - rule: Despedirse
+    steps: 
+      - intent: Despedirse
+      - action: utter_despedirse
 
-- rule: Mandar el menu cada que te digan hola
-  steps:
-  - intent: saludar
-  - action: utter_saludar
-  - action: utter_menu
   
-- rule: Despedirse
-  steps: 
-  - intent: despedirse
-  - action: utter_despedirse
+
