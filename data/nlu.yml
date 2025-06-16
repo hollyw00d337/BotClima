@@ -2,26 +2,73 @@ version: "3.1"
 nlu:
   - intent: consultar_base_datos
     examples: |
+      - Noticias
       - Quiero ver las noticias más relevantes
       - Dame las noticias del nivel 1
-      - ¿Qué hay en el nivel 3?
+      - Ver noticias
+      - 1
 
-  - intent: consultar_openai
+  - intent: explorar_por_zona_geografica
     examples: |
-      - Dame un resumen sobre [violencia](tema)
-      - Quiero información sobre [migración](tema)
-      - ¿Qué sabes sobre [derechos humanos](tema)?
-  - intent: Saludar
+      - Explorar por zona geográfica
+      - Dame información de zonas
+      - Información por región
+      - Zona geográfica
+      - 2
+
+  - intent: ver_focos_rojos
+    examples: |
+      - Ver focos rojos de esta semana
+      - ¿Qué focos rojos hay?
+      - Dame los focos rojos
+      - Alertas importantes
+      - 3
+
+  - intent: buscar_informacion
+    examples: |
+      - Dame información sobre algo
+      - Buscar datos
+      - Buscar información sobre una persona
+      - Buscar información sobre un lugar
+      - 4
+
+  - intent: saber_medios_sobre_tema
+    examples: |
+      - Saber qué se dice en medios sobre un tema
+      - Resumen de medios
+      - ¿Qué opinan los medios sobre esto?
+      - Dame un resumen de medios
+      - 5
+
+  - intent: entender_sistema
+    examples: |
+      - Entender cómo funciona este sistema
+      - ¿Qué hace este sistema?
+      - ¿Cómo trabaja el bot?
+      - Información del sistema
+      - 6
+
+  - intent: hablar_con_analista
+    examples: |
+      - Hablar con un analista humano
+      - Contactar a soporte humano
+      - Quiero hablar con un analista
+      - Analista humano
+      - 7
+  - intent: saludar
     examples: |
       - Hola
-      - Buenas tardes
-      - ¿Cómo estás?
-      - Saludos
+      - Buenas
       - Buen día
-  - intent: Despedirse
+      - Buenas tardes
+      - Buenas noches
+      - Saludos
+  - intent: despedirse
     examples: |
       - Adiós
       - Hasta luego
       - Nos vemos
-      - Chao
+      - Chau
       - Hasta pronto
+      - Me despido
+      

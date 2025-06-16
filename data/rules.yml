@@ -1,15 +1,20 @@
 version: "3.1"
 
 rules:
-  - rule: Saludar y mostrar menu
-    steps: 
-      - intent: Saludar
-      - action: utter_saludar
-      - action: utter_menu
-  - rule: Despedirse
-    steps: 
-      - intent: Despedirse
-      - action: utter_despedirse
+  - rule: Consultar noticias
+    steps:
+      - intent: consultar_noticias
+      - action: utter_consultar_noticias
+      - action: action_consultar_noticias
 
-  
+  - rule: Generar resumen
+    steps:
+      - intent: generar_resumen
+      - action: utter_generar_resumen
+      - action: action_generar_resumen
 
+  - rule: Responder sin sentido
+    steps:
+      - intent: responder_sin_sentido
+      - action: utter_responder_sin_sentido
+      - action: action_responder_sin_sentido

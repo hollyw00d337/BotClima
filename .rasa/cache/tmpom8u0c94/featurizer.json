@@ -1,0 +1,58 @@
+{
+  "type": "IntentMaxHistoryTrackerFeaturizer",
+  "state_featurizer": {
+    "action_texts": [],
+    "entity_tag_specs": [],
+    "feature_states": {
+      "intent": {
+        "back": 0,
+        "buscar_informacion": 1,
+        "consultar_base_datos": 2,
+        "consultar_noticias": 3,
+        "despedirse": 4,
+        "entender_sistema": 5,
+        "explorar_por_zona_geografica": 6,
+        "hablar_con_analista": 7,
+        "nlu_fallback": 8,
+        "out_of_scope": 9,
+        "restart": 10,
+        "saber_medios_sobre_tema": 11,
+        "saludar": 12,
+        "session_start": 13,
+        "ver_focos_rojos": 14
+      },
+      "action_name": {
+        "action_listen": 0,
+        "action_restart": 1,
+        "action_session_start": 2,
+        "action_default_fallback": 3,
+        "action_deactivate_loop": 4,
+        "action_revert_fallback_events": 5,
+        "action_default_ask_affirmation": 6,
+        "action_default_ask_rephrase": 7,
+        "action_two_stage_fallback": 8,
+        "action_unlikely_intent": 9,
+        "action_back": 10,
+        "...": 11,
+        "action_extract_slots": 12,
+        "action_responder_con_titulares": 13,
+        "action_explorar_por_zona": 14,
+        "action_ver_focos_rojos": 15,
+        "action_buscar_informacion": 16,
+        "action_saber_sobre_tema": 17,
+        "action_explicar_sistema": 18,
+        "action_contactar_humano": 19,
+        "action_consultar_noticias": 20,
+        "utter_consultar_noticias": 21,
+        "utter_despedirse": 22,
+        "utter_menu": 23,
+        "utter_saludar": 24
+      },
+      "entities": {},
+      "slots": {},
+      "active_loop": {}
+    }
+  },
+  "remove_duplicates": true,
+  "max_history": 5
+}

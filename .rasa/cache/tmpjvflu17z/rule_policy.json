@@ -1,0 +1,53 @@
+{
+  "lookup": {
+    "rules": {
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"saludar\"}}]": "utter_saludar",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"saludar\"}}, {\"prev_action\": {\"action_name\": \"utter_saludar\"}, \"user\": {\"intent\": \"saludar\"}}]": "utter_menu",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"saludar\"}}, {\"prev_action\": {\"action_name\": \"utter_saludar\"}, \"user\": {\"intent\": \"saludar\"}}, {\"prev_action\": {\"action_name\": \"utter_menu\"}, \"user\": {\"intent\": \"saludar\"}}]": "action_listen",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"ver_focos_rojos\"}}]": "action_ver_focos_rojos",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"ver_focos_rojos\"}}, {\"prev_action\": {\"action_name\": \"action_ver_focos_rojos\"}, \"user\": {\"intent\": \"ver_focos_rojos\"}}]": "action_listen",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"consultar_base_datos\"}}]": "action_responder_con_titulares",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"consultar_base_datos\"}}, {\"prev_action\": {\"action_name\": \"action_responder_con_titulares\"}, \"user\": {\"intent\": \"consultar_base_datos\"}}]": "action_listen",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"buscar_informacion\"}}]": "action_buscar_informacion",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"buscar_informacion\"}}, {\"prev_action\": {\"action_name\": \"action_buscar_informacion\"}, \"user\": {\"intent\": \"buscar_informacion\"}}]": "action_listen",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"saber_medios_sobre_tema\"}}]": "action_saber_sobre_tema",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"saber_medios_sobre_tema\"}}, {\"prev_action\": {\"action_name\": \"action_saber_sobre_tema\"}, \"user\": {\"intent\": \"saber_medios_sobre_tema\"}}]": "action_listen",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"despedirse\"}}]": "utter_despedirse",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"despedirse\"}}, {\"prev_action\": {\"action_name\": \"utter_despedirse\"}, \"user\": {\"intent\": \"despedirse\"}}]": "action_listen",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"explorar_por_zona_geografica\"}}]": "action_explorar_por_zona",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"explorar_por_zona_geografica\"}}, {\"prev_action\": {\"action_name\": \"action_explorar_por_zona\"}, \"user\": {\"intent\": \"explorar_por_zona_geografica\"}}]": "action_listen",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"entender_sistema\"}}]": "action_explicar_sistema",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"entender_sistema\"}}, {\"prev_action\": {\"action_name\": \"action_explicar_sistema\"}, \"user\": {\"intent\": \"entender_sistema\"}}]": "action_listen",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"hablar_con_analista\"}}]": "action_contactar_humano",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"hablar_con_analista\"}}, {\"prev_action\": {\"action_name\": \"action_contactar_humano\"}, \"user\": {\"intent\": \"hablar_con_analista\"}}]": "action_listen",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"consultar_noticias\"}}]": "utter_consultar_noticias",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"consultar_noticias\"}}, {\"prev_action\": {\"action_name\": \"utter_consultar_noticias\"}, \"user\": {\"intent\": \"consultar_noticias\"}}]": "action_consultar_noticias",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"consultar_noticias\"}}, {\"prev_action\": {\"action_name\": \"utter_consultar_noticias\"}, \"user\": {\"intent\": \"consultar_noticias\"}}, {\"prev_action\": {\"action_name\": \"action_consultar_noticias\"}, \"user\": {\"intent\": \"consultar_noticias\"}}]": "action_listen"
+    },
+    "rule_only_slots": [],
+    "rule_only_loops": [],
+    "rules_for_loop_unhappy_path": {},
+    "rules_not_in_stories": [
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"ver_focos_rojos\"}}, {\"prev_action\": {\"action_name\": \"action_ver_focos_rojos\"}, \"user\": {\"intent\": \"ver_focos_rojos\"}}]",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"entender_sistema\"}}]",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"explorar_por_zona_geografica\"}}, {\"prev_action\": {\"action_name\": \"action_explorar_por_zona\"}, \"user\": {\"intent\": \"explorar_por_zona_geografica\"}}]",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"hablar_con_analista\"}}, {\"prev_action\": {\"action_name\": \"action_contactar_humano\"}, \"user\": {\"intent\": \"hablar_con_analista\"}}]",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"consultar_base_datos\"}}, {\"prev_action\": {\"action_name\": \"action_responder_con_titulares\"}, \"user\": {\"intent\": \"consultar_base_datos\"}}]",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"consultar_noticias\"}}, {\"prev_action\": {\"action_name\": \"utter_consultar_noticias\"}, \"user\": {\"intent\": \"consultar_noticias\"}}]",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"hablar_con_analista\"}}]",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"explorar_por_zona_geografica\"}}]",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"entender_sistema\"}}, {\"prev_action\": {\"action_name\": \"action_explicar_sistema\"}, \"user\": {\"intent\": \"entender_sistema\"}}]",
+      "predicting default action with intent session_start",
+      "predicting default action with intent back",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"saber_medios_sobre_tema\"}}]",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"buscar_informacion\"}}, {\"prev_action\": {\"action_name\": \"action_buscar_informacion\"}, \"user\": {\"intent\": \"buscar_informacion\"}}]",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"saber_medios_sobre_tema\"}}, {\"prev_action\": {\"action_name\": \"action_saber_sobre_tema\"}, \"user\": {\"intent\": \"saber_medios_sobre_tema\"}}]",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"buscar_informacion\"}}]",
+      "predicting default action with intent restart",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"consultar_noticias\"}}]",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"consultar_noticias\"}}, {\"prev_action\": {\"action_name\": \"utter_consultar_noticias\"}, \"user\": {\"intent\": \"consultar_noticias\"}}, {\"prev_action\": {\"action_name\": \"action_consultar_noticias\"}, \"user\": {\"intent\": \"consultar_noticias\"}}]",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"consultar_base_datos\"}}]",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"ver_focos_rojos\"}}]"
+    ]
+  }
+}

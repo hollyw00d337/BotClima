@@ -1,0 +1,55 @@
+{
+  "type": "MaxHistoryTrackerFeaturizer",
+  "state_featurizer": {
+    "action_texts": [],
+    "entity_tag_specs": [],
+    "feature_states": {
+      "intent": {
+        "back": 0,
+        "buscar_informacion": 1,
+        "consultar_base_datos": 2,
+        "despedirse": 3,
+        "entender_sistema": 4,
+        "explorar_por_zona_geografica": 5,
+        "hablar_con_analista": 6,
+        "nlu_fallback": 7,
+        "out_of_scope": 8,
+        "restart": 9,
+        "saber_medios_sobre_tema": 10,
+        "saludar": 11,
+        "session_start": 12,
+        "ver_focos_rojos": 13
+      },
+      "action_name": {
+        "action_listen": 0,
+        "action_restart": 1,
+        "action_session_start": 2,
+        "action_default_fallback": 3,
+        "action_deactivate_loop": 4,
+        "action_revert_fallback_events": 5,
+        "action_default_ask_affirmation": 6,
+        "action_default_ask_rephrase": 7,
+        "action_two_stage_fallback": 8,
+        "action_unlikely_intent": 9,
+        "action_back": 10,
+        "...": 11,
+        "action_extract_slots": 12,
+        "action_responder_con_titulares": 13,
+        "action_explorar_por_zona": 14,
+        "action_ver_focos_rojos": 15,
+        "action_buscar_informacion": 16,
+        "action_saber_sobre_tema": 17,
+        "action_explicar_sistema": 18,
+        "action_contactar_humano": 19,
+        "utter_despedirse": 20,
+        "utter_menu": 21,
+        "utter_saludar": 22
+      },
+      "entities": {},
+      "slots": {},
+      "active_loop": {}
+    }
+  },
+  "remove_duplicates": true,
+  "max_history": 5
+}

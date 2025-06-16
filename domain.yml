@@ -1,57 +1,35 @@
 version: "3.1"
 
 intents:
-  - Saludar
-  - Despedirse
-  - consultar_base_datos
-  - consultar_openai
-slots:
-  tema:
-    type: text
-    influence_conversation: true
-    mappings:
-      - type: from_entity
-        entity: tema
-entities:
-  - tema
+  - consultar_noticias
+  - generar_resumen
+  - responder_sin_sentido
+
+actions:
+  - action_consultar_noticias
+  - action_generar_resumen
+  - action_responder_sin_sentido
 
 responses:
+  utter_consultar_noticias:
+    - text: "Estoy buscando las noticias más relevantes para ti..."
+  utter_generar_resumen:
+    - text: "Estoy generando un resumen de la noticia más reciente..."
+  utter_responder_sin_sentido:
+    - text: "Déjame pensar una respuesta divertida para eso..."
+
   utter_saludar:
-  - text: "¡Hola! Soy OSIBot, el asistente de inteligencia pública. ¿Sobre qué quieres saber más hoy?"
+    - text: "¡Hola! Soy OSIBot, el asistente de inteligencia pública. ¿Sobre qué quieres saber más hoy?"
 
-  utter_despedirse:
-  - text: "Hasta luego, vuelve pronto!"
   utter_menu:
-  - text: |
-      1. 📰 Ver las noticias más importantes del día
-      2. 🌎 Explorar por zona geográfica 
-      3. 📈 Ver focos rojos detectados de esta semana 
-      4. 🔎 Buscar informacion sobre una persona, tema o lugar 
-      5. 🧠 Saber qué se dice en medios sobre un tema 
-      6. 📦 Entender qué es este sistema y como funciona 
-      7. 💭 Hablar con un analista humano"
-
-  utter_ver_noticias:
-    - text: "Aquí tienes las noticias más importantes del día:"
-
-  utter_explorar_por_zona:
-    - text: "¿Qué zona te interesa explorar?"
-
-  utter_focos_rojos:
-    - text: "Estos son los focos rojos detectados esta semana:"
-
-  utter_buscar_informacion:
-    - text: "Buscando información sobre {tema}..."
-
-  utter_medios_sobre_tema:
-    - text: "Esto es lo que los medios dicen sobre {tema}:"
-
-  utter_entender_sistema:
-    - text: "Este sistema te ayuda a recopilar y analizar información relevante de medios de comunicación. ¿En qué más te puedo ayudar?"
-
-  utter_hablar_con_analista:
-    - text: "Para hablar con un analista humano, puedes escribir a contacto@ejemplo.com o usar el chat en vivo."
-
-session_config:
-  session_expiration_time: 60
-  carry_over_slots_to_new_session: true
+    - text: |
+        1. 📰 Ver las noticias más importantes del día
+        2. 🌎 Explorar por zona geográfica
+        3. 📈 Ver focos rojos detectados de esta semana
+        4. 🔎 Buscar información sobre una persona, tema o lugar
+        5. 🧠 Saber qué se dice en medios sobre un tema
+        6. 📦 Entender qué es este sistema y cómo funciona
+        7. 💭 Hablar con un analista humano
+  utter_despedirse:
+    - text: "¡Hasta luego! Si necesitas más información, no dudes en volver."
+   

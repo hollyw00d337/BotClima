@@ -1,0 +1,45 @@
+{
+  "lookup": {
+    "rules": {
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"buscar_informacion\"}}]": "utter_buscar_informacion",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"buscar_informacion\"}}, {\"prev_action\": {\"action_name\": \"utter_buscar_informacion\"}, \"user\": {\"intent\": \"buscar_informacion\"}}]": "action_listen",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"hablar_con_analista\"}}]": "utter_hablar_con_analista",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"hablar_con_analista\"}}, {\"prev_action\": {\"action_name\": \"utter_hablar_con_analista\"}, \"user\": {\"intent\": \"hablar_con_analista\"}}]": "action_listen",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"saludar\"}}]": "utter_saludar",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"saludar\"}}, {\"prev_action\": {\"action_name\": \"utter_saludar\"}, \"user\": {\"intent\": \"saludar\"}}]": "utter_menu",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"saludar\"}}, {\"prev_action\": {\"action_name\": \"utter_saludar\"}, \"user\": {\"intent\": \"saludar\"}}, {\"prev_action\": {\"action_name\": \"utter_menu\"}, \"user\": {\"intent\": \"saludar\"}}]": "action_listen",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"focos_rojos\"}}]": "utter_focos_rojos",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"focos_rojos\"}}, {\"prev_action\": {\"action_name\": \"utter_focos_rojos\"}, \"user\": {\"intent\": \"focos_rojos\"}}]": "action_listen",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"saber_medios_sobre_tema\"}}]": "utter_medios_sobre_tema",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"saber_medios_sobre_tema\"}}, {\"prev_action\": {\"action_name\": \"utter_medios_sobre_tema\"}, \"user\": {\"intent\": \"saber_medios_sobre_tema\"}}]": "action_listen",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"consultar_base_datos\"}}]": "action_responder_con_titulares",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"consultar_base_datos\"}}, {\"prev_action\": {\"action_name\": \"action_responder_con_titulares\"}, \"user\": {\"intent\": \"consultar_base_datos\"}}]": "action_listen",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"explorar_por_zona_geografica\"}}]": "utter_explorar_por_zona",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"explorar_por_zona_geografica\"}}, {\"prev_action\": {\"action_name\": \"utter_explorar_por_zona\"}, \"user\": {\"intent\": \"explorar_por_zona_geografica\"}}]": "action_listen",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"entender_sistema\"}}]": "utter_entender_sistema",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"entender_sistema\"}}, {\"prev_action\": {\"action_name\": \"utter_entender_sistema\"}, \"user\": {\"intent\": \"entender_sistema\"}}]": "action_listen"
+    },
+    "rule_only_slots": [],
+    "rule_only_loops": [],
+    "rules_for_loop_unhappy_path": {},
+    "rules_not_in_stories": [
+      "predicting default action with intent restart",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"explorar_por_zona_geografica\"}}, {\"prev_action\": {\"action_name\": \"utter_explorar_por_zona\"}, \"user\": {\"intent\": \"explorar_por_zona_geografica\"}}]",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"buscar_informacion\"}}, {\"prev_action\": {\"action_name\": \"utter_buscar_informacion\"}, \"user\": {\"intent\": \"buscar_informacion\"}}]",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"saber_medios_sobre_tema\"}}]",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"focos_rojos\"}}, {\"prev_action\": {\"action_name\": \"utter_focos_rojos\"}, \"user\": {\"intent\": \"focos_rojos\"}}]",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"consultar_base_datos\"}}]",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"entender_sistema\"}}]",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"hablar_con_analista\"}}]",
+      "predicting default action with intent session_start",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"buscar_informacion\"}}]",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"hablar_con_analista\"}}, {\"prev_action\": {\"action_name\": \"utter_hablar_con_analista\"}, \"user\": {\"intent\": \"hablar_con_analista\"}}]",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"explorar_por_zona_geografica\"}}]",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"focos_rojos\"}}]",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"entender_sistema\"}}, {\"prev_action\": {\"action_name\": \"utter_entender_sistema\"}, \"user\": {\"intent\": \"entender_sistema\"}}]",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"saber_medios_sobre_tema\"}}, {\"prev_action\": {\"action_name\": \"utter_medios_sobre_tema\"}, \"user\": {\"intent\": \"saber_medios_sobre_tema\"}}]",
+      "predicting default action with intent back",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"consultar_base_datos\"}}, {\"prev_action\": {\"action_name\": \"action_responder_con_titulares\"}, \"user\": {\"intent\": \"consultar_base_datos\"}}]"
+    ]
+  }
+}

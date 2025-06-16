@@ -1,155 +1,86 @@
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
 from pymongo import MongoClient
-import openai
-
-# Configuración de MongoDB
-MONGO_URI = "mongodb://localhost:27017/"
-client = MongoClient(MONGO_URI)
-db = client["nombre_de_tu_base_de_datos"]
+import openai  # Biblioteca de OpenAI para la API
 
 # Configuración de OpenAI
-openai.api_key = "TU_API_KEY_DE_OPENAI"
+openai.api_key = "TU_API_KEY_OPENAI"
 
-class ActionResponderConTitulares(Action):
+class ActionConsultarNoticias(Action):
     def name(self):
-        return "action_responder_con_titulares"
+        return "action_consultar_noticias"
 
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: dict):
-        # Consulta a la base de datos
-        noticias = db["notas"].find({"clasificacion": "más relevante"}).limit(5)
-        mensaje = "Aquí tienes los titulares más importantes:\n"
-        for nota in noticias:
-            mensaje += f"- {nota['titulo']} (Fecha: {nota['fecha']})\n"
-
-        dispatcher.utter_message(text=mensaje)
-        return []
-
-class ActionResponderConResumen(Action):
-    def name(self):
-        return "action_responder_con_resumen"
-
-    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: dict):
-        # Consulta a la base de datos
-        noticias = db["notas"].find({"clasificacion": "más relevante"}).limit(5)
-        resumen = "Resúmenes de las noticias más relevantes:\n"
-
-        for nota in noticias:
-            # Generar resumen utilizando OpenAI
-            try:
-                respuesta = openai.Completion.create(
-                    engine="text-davinci-003",
-                    prompt=f"Genera un resumen de esta noticia: {nota['cuerpo']}",
-                    max_tokens=100
-                )
-                resumen_nota = respuesta.choices[0].text.strip()
-                resumen += f"- {nota['titulo']}:\n{resumen_nota}\n\n"
-            except Exception as e:
-                resumen += f"- {nota['titulo']} (Error al generar resumen)\n"
-
-        dispatcher.utter_message(text=resumen)
-        return []
-
-class ActionResponderPorTema(Action):
-    def name(self):
-        return "action_responder_por_tema"
-
-    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: dict):
-        tema = tracker.get_slot("tema")
-        if not tema:
-            dispatcher.utter_message(text="Por favor, proporciona un tema para realizar la consulta.")
-            return []
-
-        # Consulta a la base de datos
-        noticias = db["notas"].find({"cuerpo": {"$regex": tema, "$options": "i"}}).limit(5)
-        resumen = f"Resúmenes sobre el tema '{tema}':\n"
-
-        for nota in noticias:
-            try:
-                respuesta = openai.Completion.create(
-                    engine="text-davinci-003",
-                    prompt=f"Genera un resumen de esta noticia: {nota['cuerpo']}",
-                    max_tokens=100
-                )
-                resumen_nota = respuesta.choices[0].text.strip()
-                resumen += f"- {nota['titulo']}:\n{resumen_nota}\n\n"
-            except Exception as e:
-                resumen += f"- {nota['titulo']} (Error al generar resumen)\n"
-
-        dispatcher.utter_message(text=resumen)
-        return []
-
-class ActionResponderConResumenYEnlaces(Action):
-    def name(self):
-        return "action_responder_con_resumen_y_enlaces"
-
-    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: dict):
-        tema = tracker.get_slot("tema")
-        if not tema:
-            dispatcher.utter_message(text="Por favor, proporciona un tema para realizar la consulta.")
-            return []
-
-        # Consulta a la base de datos
-        noticias = db["notas"].find({"cuerpo": {"$regex": tema, "$options": "i"}}).limit(5)
-        mensaje = f"Resumen y enlaces sobre el tema '{tema}':\n"
-
-        for nota in noticias:
-            try:
-                respuesta = openai.Completion.create(
-                    engine="text-davinci-003",
-                    prompt=f"Genera un resumen de esta noticia: {nota['cuerpo']}",
-                    max_tokens=100
-                )
-                resumen_nota = respuesta.choices[0].text.strip()
-                mensaje += f"- {nota['titulo']}:\n{resumen_nota}\nEnlace: {nota['sitio']}\n\n"
-            except Exception as e:
-                mensaje += f"- {nota['titulo']} (Error al generar resumen)\n"
-
-        dispatcher.utter_message(text=mensaje)
-        return []
-
-class ActionGenerarResumenGeneral(Action):
-    def name(self):
-        return "action_generar_resumen_general"
-
-    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: dict):
-        # Consulta a la base de datos
-        noticias = db["notas"].find().limit(10)
-        cuerpo_completo = " ".join([nota["cuerpo"] for nota in noticias])
-
+        # Conectar a MongoDB
         try:
-            respuesta = openai.Completion.create(
-                engine="text-davinci-003",
-                prompt=f"Genera un resumen general de las siguientes noticias: {cuerpo_completo}",
-                max_tokens=200
-            )
-            resumen = respuesta.choices[0].text.strip()
-            dispatcher.utter_message(text=f"Resumen general:\n{resumen}")
+            cliente = MongoClient("mongodb://localhost:27017/")
+            db = cliente["noticias_db"]
+            coleccion = db["nivel1"]  # Ejemplo: Nivel 1
+
+            # Consultar noticias más relevantes
+            noticias = coleccion.find({"clasificacion": "más relevante"}).sort("fecha", -1).limit(5)
+            if noticias.count() == 0:
+                dispatcher.utter_message(text="No se encontraron noticias relevantes para el día de hoy.")
+                return []
+
+            # Generar respuesta
+            respuesta = "Aquí tienes las noticias más relevantes:\n"
+            for noticia in noticias:
+                respuesta += f"- {noticia['titulo']} ({noticia['fecha']})\n"
+
+            dispatcher.utter_message(text=respuesta)
         except Exception as e:
-            dispatcher.utter_message(text=f"Hubo un error al generar el resumen general: {str(e)}")
-
+            dispatcher.utter_message(text=f"Hubo un error al consultar las noticias: {str(e)}")
         return []
 
-class ActionExplicarSistema(Action):
+
+class ActionGenerarResumen(Action):
     def name(self):
-        return "action_explicar_sistema"
+        return "action_generar_resumen"
 
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: dict):
-        mensaje = (
-            "Este sistema recopila información de diversos medios, organiza las noticias según su relevancia y nivel, "
-            "y utiliza inteligencia artificial para generar resúmenes, análisis y respuestas personalizadas. "
-            "¿En qué más te puedo ayudar?"
-        )
-        dispatcher.utter_message(text=mensaje)
+        # Recuperar la noticia más reciente de MongoDB
+        try:
+            cliente = MongoClient("mongodb://localhost:27017/")
+            db = cliente["noticias_db"]
+            coleccion = db["nivel1"]
+
+            noticia = coleccion.find_one({"clasificacion": "más relevante"}, sort=[("fecha", -1)])
+            if not noticia:
+                dispatcher.utter_message(text="No se encontró ninguna noticia para resumir.")
+                return []
+
+            # Usar OpenAI para generar el resumen
+            prompt = f"Genera un resumen de esta noticia: {noticia['titulo']}\n{noticia['cuerpo']}"
+            response = openai.Completion.create(
+                engine="text-davinci-003",
+                prompt=prompt,
+                max_tokens=100
+            )
+
+            resumen = response.choices[0].text.strip()
+            dispatcher.utter_message(text=f"Resumen generado:\n{resumen}")
+        except Exception as e:
+            dispatcher.utter_message(text=f"Hubo un error al generar el resumen: {str(e)}")
         return []
 
-class ActionContactarHumano(Action):
+
+class ActionResponderSinSentido(Action):
     def name(self):
-        return "action_contactar_humano"
+        return "action_responder_sin_sentido"
 
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: dict):
-        mensaje = (
-            "Para hablar con un analista humano, puedes escribir a contacto@ejemplo.com o usar el chat en vivo disponible en nuestro sitio web."
+        # Obtener la pregunta del usuario
+        pregunta = tracker.latest_message.get("text")
+
+        # Usar OpenAI para generar una respuesta creativa
+        prompt = f"Responde de manera creativa o divertida esta pregunta: {pregunta}"
+        response = openai.Completion.create(
+            engine="text-davinci-003",
+            prompt=prompt,
+            max_tokens=100
         )
-        dispatcher.utter_message(text=mensaje)
+
+        respuesta = response.choices[0].text.strip()
+        dispatcher.utter_message(text=respuesta)
         return []
