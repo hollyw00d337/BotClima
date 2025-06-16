@@ -1,9 +1,19 @@
 version: "3.1"
 
 intents:
-  - analizar_noticia
-  - resumen_tematico
-  - subir_nota
+  - Saludar
+  - Despedirse
+  - consultar_base_datos
+  - consultar_openai
+slots:
+  tema:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: tema
+entities:
+  - tema
 
 responses:
   utter_saludar:
@@ -21,6 +31,28 @@ responses:
       6. 📦 Entender qué es este sistema y como funciona 
       7. 💭 Hablar con un analista humano"
 
+  utter_ver_noticias:
+    - text: "Aquí tienes las noticias más importantes del día:"
+
+  utter_explorar_por_zona:
+    - text: "¿Qué zona te interesa explorar?"
+
+  utter_focos_rojos:
+    - text: "Estos son los focos rojos detectados esta semana:"
+
+  utter_buscar_informacion:
+    - text: "Buscando información sobre {tema}..."
+
+  utter_medios_sobre_tema:
+    - text: "Esto es lo que los medios dicen sobre {tema}:"
+
+  utter_entender_sistema:
+    - text: "Este sistema te ayuda a recopilar y analizar información relevante de medios de comunicación. ¿En qué más te puedo ayudar?"
+
+  utter_hablar_con_analista:
+    - text: "Para hablar con un analista humano, puedes escribir a contacto@ejemplo.com o usar el chat en vivo."
+
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true
+
